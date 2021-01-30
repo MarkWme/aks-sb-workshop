@@ -11,5 +11,6 @@ GitHub CLI (optional)
 ### Clone Repositories
 
 Clone this repo
+Fork the AKS Secure Baseline Repo?
 Clone the AKS Secure Baseline Repo
 

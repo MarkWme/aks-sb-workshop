@@ -52,4 +52,8 @@ This should list all of the pods running in your cluster across all namespaces. 
 
 This is because your cluster has AAD integration enabled and you need to authenticate using an AAD account. Go ahead and open [](https://microsoft.com/devicelogin) and enter the code. Remember your code will be different to the one documented here!  You'll then be asked to authenticate with Azure AD.
 
+- Use the Azure AD account that you added to the AKS management group
+
 ![Azure Active Directory sign in prompt](images/03aadsignin.png)
+
+- 

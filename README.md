@@ -5,51 +5,60 @@ Whilst the AKS Secure Baseline [repo](https://github.com/mspnp/aks-secure-baseli
 
 ### **Contents**
 
+0. Pre-requisites
 1. Deploying the network infrastructure
 2. Deploying and configuring the AKS cluster and supporting services.
-3. Deep dive - Network topology
-    - Firewall
-    - Load balancer
-    - App Gateway / WAF
-4. Deep dive - Container registry
-5. Deep dive - Key Vault
-6. Deep dive - Kubernetes cluster configuration
-    - Security
+
+3. Authentication and Authorisation
+    - Azure AD integration, using kubectl to access the cluster using AAD auth
+    - How Azure AD auth works, kubelogin
+    - Azure RBAC and K8s RBAC integration
+
+4. Cluster Compute
+    - Node spec
+    - Scaling, HPA and CA
+    - System and user node pools
+    - Memory reservation
+    - Node maintenance, kured, node image updates
+
+5. Identity Management
+    - Managed Identity configuration
+
+6. Container Registry
+    - Authentication
+    - Importing public images
+    - Geo replication
+
+7. Cluster Configuration Management
+    - GitOps / Flux
+    - Investigate the YAML files
     - Namespaces
-    - GitOps
------
-### Network topology
-- Hub with subnets for Azure Firewall, on-prem gateway and Bastion
-- Spoke with subnets for App Gateway, Ingress and Cluster nodes
-- IP address space design
-### **kured vs node image updates**
+    - Components installed via GitOps - Pod Identity, Key Vault CSI
 
-### Container Registry
-- Cluster auth, importing public images, policy to enforce authorised registries
-- Geo replication
+8. Azure Network Configuration
+    - Hub and spoke network topology, peering
+    - Subnets for App Gateway, Ingress and Cluster
+    - Forced tunnel configuration
+    - Network Security Group configuration
+    - Azure Firewall configuration
+    - Azure Load Balancer
 
-### Cluster Compute
-- System and user node pools
-- Scaling? HPA, CA
-- BCP, node counts, pod availability, requests, limits
-- AZ's and multi region
+9. Kubernetes Network Configuration
+    - Azure CNI, network address space design
+    - Azure Network Policy
+    - App Gateway, Traefik Ingress, Certificates
 
-### Security (Authentication and Authorisation)
-- AAD integration (kubectl)
-- SP and MI
-- K8s RBAC
-- AAD RBAC
-- Pod Identity
+10. Secret Management
+    - Key Vault configuration
 
-### Ingress
-- ILB (AKS managed)
-- ALB in a dedicated subnet for Ingress
-- Traefik, config and routing
-- App Gateway
-- Cert config
+11. Governance
+    - Azure Policy
+    - Understand the default policies that have been deployed
 
-- Secure network flow, traffic flow in and out of the cluster, firewall config
+12. Application
+    - Deployment
+    - Network policy
+    - Traffic flow
 
-- Secret management, Key Vault and CSI driver
-
-- Azure Policy
+13. Monitoring and Observability
+    - Use Log Analytics to ...
