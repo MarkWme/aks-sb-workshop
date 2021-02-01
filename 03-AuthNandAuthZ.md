@@ -57,3 +57,5 @@ This is because your cluster has AAD integration enabled and you need to authent
 ![Azure Active Directory sign in prompt](images/03aadsignin.png)
 
 - 
+
+kubectl describe clusterrolebinding aks-cluster-admin-binding-aad
