@@ -5,37 +5,36 @@ Whilst the AKS Secure Baseline [repo](https://github.com/mspnp/aks-secure-baseli
 
 ### **Contents**
 
-0. Pre-requisites
-1. Deploying the network infrastructure
-2. Deploying and configuring the AKS cluster and supporting services.
+0. **Pre-requisites**
+1. **Deploying the network infrastructure**
+2. **Deploying and configuring the AKS cluster and supporting services.**
 
-3. Authentication and Authorisation
-    - Azure AD integration, using kubectl to access the cluster using AAD auth
-    - How Azure AD auth works, kubelogin
-    - Azure RBAC and K8s RBAC integration
+3. **Authentication and Authorisation**
+    - Accessing your cluster using Azure Active Directory for authentication
+    - Understanding Kubernetes RBAC
 
-4. Cluster Compute
+4. **Cluster Compute**
     - Node spec
     - Scaling, HPA and CA
     - System and user node pools
     - Memory reservation
     - Node maintenance, kured, node image updates
 
-5. Identity Management
+5. **Identity Management**
     - Managed Identity configuration
 
-6. Container Registry
+6. **Container Registry**
     - Authentication
     - Importing public images
     - Geo replication
 
-7. Cluster Configuration Management
+7. **Cluster Configuration Management**
     - GitOps / Flux
     - Investigate the YAML files
     - Namespaces
     - Components installed via GitOps - Pod Identity, Key Vault CSI
 
-8. Azure Network Configuration
+8. **Azure Network Configuration**
     - Hub and spoke network topology, peering
     - Subnets for App Gateway, Ingress and Cluster
     - Forced tunnel configuration
@@ -43,22 +42,22 @@ Whilst the AKS Secure Baseline [repo](https://github.com/mspnp/aks-secure-baseli
     - Azure Firewall configuration
     - Azure Load Balancer
 
-9. Kubernetes Network Configuration
+9. **Kubernetes Network Configuration**
     - Azure CNI, network address space design
     - Azure Network Policy
     - App Gateway, Traefik Ingress, Certificates
 
-10. Secret Management
+10. **Secret Management**
     - Key Vault configuration
 
-11. Governance
+11. **Governance**
     - Azure Policy
     - Understand the default policies that have been deployed
 
-12. Application
+12. **Application**
     - Deployment
     - Network policy
     - Traffic flow
 
-13. Monitoring and Observability
+13. **Monitoring and Observability**
     - Use Log Analytics to ...
