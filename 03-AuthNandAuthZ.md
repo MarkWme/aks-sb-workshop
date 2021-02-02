@@ -7,8 +7,6 @@ In parts 1 and 2 of this workshop you completed the deployment of an AKS cluster
 
 ## Part 3: Authentication and Authorisation
 
----
-
 ## Concepts
 
 Kubernetes clusters support two types of users. One of these is service accounts, which are managed by the Kubernetes API and generally used by pods to allow in-cluster processes to talk to the Kubernetes API. 
@@ -47,26 +45,26 @@ az aks get-credentials -n <your cluster name> -g <your cluster's resource group>
 
 After a few seconds, you should see a message that tells you your cluster has been merged as current context
 
-```
-Merged "aks-oqchal7ga453i" as current context in /home/mark/.kube/config
-```
+>```
+>Merged "aks-oqchal7ga453i" as current context in /home/mark/.kube/config
+>```
 The `kubectl` command gets its configuration from what's known as the *kubeconfig* file. This is normally a file named `config` stored in the hidden `.kube` folder under a user's home directory. In the output from `az aks get-credentials` you should see the full path to your kubeconfig file - i.e `/home/mark/.kube/config` in this example. You can store details for multiple clusters in kubeconfig. The *current context* simply means that the cluster specified is now the default and all `kubectl` commands you run will target that cluster.
 
 If you examine your kubeconfig file, you'll find a section similar to the following:
 
-```
-users:
-- name: clusterUser_akssb-cluster_aks-oqchal7ga453i
-  user:
-    auth-provider:
-      config:
-        apiserver-id: 6dae42f8-4368-4678-94ff-3960e28e3630
-        client-id: 80faf920-1908-4b52-b5ef-a8e7bedfc67a
-        config-mode: '1'
-        environment: AzurePublicCloud
-        tenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-      name: azure
-```
+>```
+>users:
+>- name: clusterUser_akssb-cluster_aks-oqchal7ga453i
+>  user:
+>    auth-provider:
+>      config:
+>        apiserver-id: 6dae42f8-4368-4678-94ff-3960e28e3630
+>        client-id: 80faf920-1908-4b52-b5ef-a8e7bedfc67a
+>        config-mode: '1'
+>        environment: AzurePublicCloud
+>        tenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+>      name: azure
+>```
 This is how Azure AD authentication is configured. The `apiserver-id` value will match an Enterprise Application object that will be visible in your Azure AD tenant. This object will be named *Azure Kubernetes Service AAD Server*. The `client-id` refers to an internal AAD object that you wont see in your tenant! The `tenant-id` will be the Tenant ID for your Azure AD instance.
 
 Now let's see what happens when we try to run a command against our cluster. Try the following
@@ -76,9 +74,9 @@ kubectl get pods -A
 ```
 
 This should list all of the pods running in your cluster across all namespaces. But what you will see is a prompt similar to the following
-```
-To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code AH8HHMZFX to authenticate.
-```
+>```
+>To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code AH8HHMZFX to authenticate.
+>```
 Because your cluster has AAD integration enabled, you now need to authenticate using an AAD account. Go ahead and open [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin) in your browser and enter the code. Remember your code will be different to the one documented here!  You'll then be asked to authenticate with Azure AD.
 
 > Remember to authenticate using the Azure AD account that you added to the AAD group that you created.
@@ -87,15 +85,15 @@ Because your cluster has AAD integration enabled, you now need to authenticate u
 
 Once authentication is complete, return to the terminal where you entered the `kubectl` command and you should see the output.
 
-```
-NAMESPACE                   NAME                                         READY   STATUS    RESTARTS   AGE
-a0008                       aspnetapp-deployment-7d5f54499c-44j4n        1/1     Running   0          4d8h
-a0008                       aspnetapp-deployment-7d5f54499c-ms2r8        1/1     Running   0          4d8h
-a0008                       traefik-ingress-controller-89d76cbfc-swv2g   1/1     Running   0          4d8h
-a0008                       traefik-ingress-controller-89d76cbfc-tdk9g   1/1     Running   0          3d10h
-cluster-baseline-settings   aad-pod-identity-mic-cd9c49498-8dzvr         1/1     Running   0          3d10h
-... (and several more lines like this!)
-```
+>```
+>NAMESPACE                   NAME                                         READY   STATUS    RESTARTS   AGE
+>a0008                       aspnetapp-deployment-7d5f54499c-44j4n        1/1     Running   0          4d8h
+>a0008                       aspnetapp-deployment-7d5f54499c-ms2r8        1/1     Running   0          4d8h
+>a0008                       traefik-ingress-controller-89d76cbfc-swv2g   1/1     Running   0          4d8h
+>a0008                       traefik-ingress-controller-89d76cbfc-tdk9g   1/1     Running   0          3d10h
+>cluster-baseline-settings   aad-pod-identity-mic-cd9c49498-8dzvr         1/1     Running   0          3d10h
+>... (and several more lines like this!)
+>```
 As well as Azure AD authentication, Kubernetes RBAC was used for authorisation. Kubernetes has *ClusterRoles* (roles that are applied across the whole cluster) and *Roles* (roles that are applied to a specific namespace). We then have ClusterRoleBindings and RoleBindings that are used to map users or groups to roles.
 
 > **Remember**  
@@ -121,19 +119,19 @@ Next, we'll examine the `aks-cluster-admin-binding-aad` ClusterRoleBinding in mo
 kubectl describe clusterrolebinding aks-cluster-admin-binding-aad
 ```
 This will provide the details for this particular binding as follows:
-```
-Name:         aks-cluster-admin-binding-aad
-Labels:       addonmanager.kubernetes.io/mode=Reconcile
-              kubernetes.io/cluster-service=true
-Annotations:  <none>
-Role:
-  Kind:  ClusterRole
-  Name:  cluster-admin
-Subjects:
-  Kind   Name                                  Namespace
-  ----   ----                                  ---------
-  Group  56e5d9db-602e-49cb-a594-e7bd3c00a7f3
-```
+>```
+>Name:         aks-cluster-admin-binding-aad
+>Labels:       addonmanager.kubernetes.io/mode=Reconcile
+>              kubernetes.io/cluster-service=true
+>Annotations:  <none>
+>Role:
+>  Kind:  ClusterRole
+>  Name:  cluster-admin
+>Subjects:
+>  Kind   Name                                  Namespace
+>  ----   ----                                  ---------
+>  Group  56e5d9db-602e-49cb-a594-e7bd3c00a7f3
+>```
 As you can see, the `ClusterRole` named `cluster-admin` is bound to a `Group` whose `Name` should be the object ID of the AAD group you created. This is effectively saying that we want to grant this "Group" the role of "cluster-admin"
 
 We can also examine cluster-role to see what level of access that grants us
@@ -141,16 +139,16 @@ We can also examine cluster-role to see what level of access that grants us
 kubectl describe clusterrole cluster-admin
 ```
 The result will look like this
-```
-Name:         cluster-admin
-Labels:       kubernetes.io/bootstrapping=rbac-defaults
-Annotations:  rbac.authorization.kubernetes.io/autoupdate: true
-PolicyRule:
-  Resources  Non-Resource URLs  Resource Names  Verbs
-  ---------  -----------------  --------------  -----
-  *.*        []                 []              [*]
-             [*]                []              [*]
-```
+>```
+>Name:         cluster-admin
+>Labels:       kubernetes.io/bootstrapping=rbac-defaults
+>Annotations:  rbac.authorization.kubernetes.io/autoupdate: true
+>PolicyRule:
+>  Resources  Non-Resource URLs  Resource Names  Verbs
+>  ---------  -----------------  --------------  -----
+>  *.*        []                 []              [*]
+>             [*]                []              [*]
+>```
 Effectively, this role is granting full access to all resources on the cluster.
 
 Kubernetes RBAC rules can be very granular. As an experiment, have a look at the pre-defined `view` ClusterRole
@@ -159,20 +157,20 @@ Kubernetes RBAC rules can be very granular. As an experiment, have a look at the
 kubectl describe clusterrole view
 ```
 The output from this command is quite long. Here is some of the output
-```
-Name:         view
-Labels:       kubernetes.io/bootstrapping=rbac-defaults
-              rbac.authorization.k8s.io/aggregate-to-edit=true
-Annotations:  rbac.authorization.kubernetes.io/autoupdate: true
-PolicyRule:
-  Resources                                    Non-Resource URLs  Resource Names  Verbs
-  ---------                                    -----------------  --------------  -----
-  <-- snip -->
-  pods/log                                     []                 []              [get list watch]
-  pods/status                                  []                 []              [get list watch]
-  pods                                         []                 []              [get list watch]
-  <-- snip -->
-```
+>```
+>Name:         view
+>Labels:       kubernetes.io/bootstrapping=rbac-defaults
+>              rbac.authorization.k8s.io/aggregate-to-edit=true
+>Annotations:  rbac.authorization.kubernetes.io/autoupdate: true
+>PolicyRule:
+>  Resources                                    Non-Resource URLs  Resource Names  Verbs
+>  ---------                                    -----------------  --------------  -----
+>  <-- snip -->
+>  pods/log                                     []                 []              [get list watch]
+>  pods/status                                  []                 []              [get list watch]
+>  pods                                         []                 []              [get list watch]
+>  <-- snip -->
+>```
 Here we're being very specific about the types of resources that we want to permit access to and the verbs (actions) that we can take against those resources. So, for example, a user with the `view` role can only get, list or watch a pod. Effectively, this gives them read-only access.
 
 ---
