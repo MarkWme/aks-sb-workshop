@@ -9,11 +9,11 @@ Whilst the AKS Secure Baseline [repo](https://github.com/mspnp/aks-secure-baseli
 1. **Deploying the network infrastructure**
 2. **Deploying and configuring the AKS cluster and supporting services.**
 
-3. **Authentication and Authorisation**
+3. [**Authentication and Authorisation**](03-AuthNandAuthZ.md)
     - Accessing your cluster using Azure Active Directory for authentication
     - Understanding Kubernetes RBAC
 
-4. **Cluster Compute**
+4. [**Cluster Compute**](04-ClusterCompute.md)
     - Node spec
     - Scaling, HPA and CA
     - System and user node pools

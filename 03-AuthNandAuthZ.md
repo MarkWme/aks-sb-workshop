@@ -107,13 +107,13 @@ First, we'll find the ClusterRoleBinding resources that the AKS deployment creat
 kubectl get clusterrolebindings | grep "aks"
 ```
 The output should be as follows:
-```
-aks-cluster-admin-binding                              ClusterRole/cluster-admin                                          4d22h
-aks-cluster-admin-binding-aad                          ClusterRole/cluster-admin                                          4d22h
-aks-service-rolebinding                                ClusterRole/aks-service                                            4d22h
-system:aks-client-node-proxier                         ClusterRole/system:node-proxier                                    4d22h
-system:aks-client-nodes                                ClusterRole/system:node                                            4d22h
-```
+>```
+>aks-cluster-admin-binding              ClusterRole/cluster-admin               4d22h
+>aks-cluster-admin-binding-aad          ClusterRole/cluster-admin               4d22h
+>aks-service-rolebinding                ClusterRole/aks-service                 4d22h
+>system:aks-client-node-proxier         ClusterRole/system:node-proxier         4d22h
+>system:aks-client-nodes                ClusterRole/system:node                 4d22h
+>```
 Next, we'll examine the `aks-cluster-admin-binding-aad` ClusterRoleBinding in more detail
 ```
 kubectl describe clusterrolebinding aks-cluster-admin-binding-aad

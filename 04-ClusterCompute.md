@@ -4,6 +4,12 @@
 
 In this section, we'll examine the nodes that have been deployed in your AKS cluster.
 
+## Concepts
+
+---
+
+## Exercises
+
 ```
 kubectl get nodes -o wide
 ```
@@ -15,3 +21,10 @@ az aks nodepool list --cluster-name aks-oqchal7ga453i -g akssb-cluster -o table
 ```
 ![az aks nodepool list command output](images/04-azaksnodepoollist.png)
 
+---
+
+## Summary
+
+---
+
+## References
