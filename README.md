@@ -14,7 +14,8 @@ Whilst the AKS Secure Baseline [repo](https://github.com/mspnp/aks-secure-baseli
     - Understanding Kubernetes RBAC
 
 4. [**Cluster Compute**](04-ClusterCompute.md)
-    - Node spec
+    - Node pools
+    - Nodes
     - Scaling, HPA and CA
     - System and user node pools
     - Memory reservation
@@ -58,6 +59,7 @@ Whilst the AKS Secure Baseline [repo](https://github.com/mspnp/aks-secure-baseli
     - Deployment
     - Network policy
     - Traffic flow
+    - PDB
 
 13. **Monitoring and Observability**
     - Use Log Analytics to ...
