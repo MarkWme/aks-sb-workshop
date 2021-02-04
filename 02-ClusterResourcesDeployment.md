@@ -48,7 +48,14 @@ Test the Public IP endpoint using curl.
 curl -k -H "Host: bicycle.contoso.com" https://<PUBLIC_IP_GOES_HERE>/
 ```
 
-Now that you have verified provisioning completed successfully, you can go to the AKS Cluster resource group and have a look at all the resources that were created.
+**Challenge**
+
+- What AKS supporting resources did the deployment create?
+- What is the name of the resource group that the AKS worker nodes got deployed too?
+
+**NOTE**
+
+- Now that you have verified provisioning completed successfully, you have a working AKS Baseline architecture. You can deploy an App to it as part of a PoC, and it can also be used for Production purposes.
 
 ---
 

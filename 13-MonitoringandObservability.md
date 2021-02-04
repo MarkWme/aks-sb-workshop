@@ -10,48 +10,63 @@ In this part we will explore the integration between AKS and Azure Monitor for C
 
 ## Concepts
 
-Instead of spending time creating the network by hand, we are going to use an ARM Template to construct what we need.
+The Azure Monitor for Containers (AzMon for Containers) feature is the recommended tool for monitoring and logging because you can view events in real time. It captures container logs from the running pods and aggregates them for viewing. It also collects information from Metrics API about memory and CPU utilization to monitor the health of running resources and workloads. You can use it to monitor performance as the pods scale. Another advantage is that you can easily use Azure portal to configure charts and dashboards.
+
+It has the capability to create alerts that trigger Automation Runbooks, Azure Functions, and others.
+
+Most workloads hosted in pods emit Prometheus metrics. Azure Monitor is capable of scraping Prometheus metrics and visualizing them.
 
 ---
 
 ## Exercises
 
-The first thing we are going to do is define the variables needed for the script that will execute the ARM networking template.
+Let's explore the AzMon for Containers solution and what you get out of the box.
+
+First, let's take a look at how the logs get from the cluster to Log Analytics.
 
 ```bash
-# Variables
-PREFIX="khaksbl"
-LOC="westeurope"
-SUB="<SUBSCRIPTION_GOES_HERE>"
-AAD_TENANTID="<AAD_TENANTID_GOES_HERE>"
-HUB_NAME_RG="${PREFIX}-hub-rg"
-SPOKE_NAME_RG="${PREFIX}-spoke-rg"
-AKS_RG="${PREFIX}-aks-rg"
+# How do the logs get there?
+kubectl -n kube-system get po -l component=oms-agent
+
+# What does the omsagent use to send logs to Log Analytics?
+kubectl -n kube-system get configmap omsagent-rs-config -o yaml
 ```
 
-After we have defined our variables, we are going to execute the **0-networking-stamp.sh** script in the **inner-loop-scripts/shell** directory in the AKS Baseline repo.
+Second, let's take a look at what kind of data is captured. For that let's visit the Azure Portal:
 
-```bash
-# Execute Script (inner-loop-scripts/shell)
-./0-networking-stamp.sh -l $LOC -s $SUB -t $AAD_TENANTID -h $HUB_NAME_RG -p $SPOKE_NAME_RG -c $AKS_RG
+1. Open Azure Portal
+2. Go to AKS Cluster
+3. Click on Insights Blade & Explore
+4. Click on Logs Blade & Explore
 
-# Sample Output (SAVE for Next Section)
-./1-cluster-stamp.sh westeurope aksbl01-aks-rg aksbl01-spoke-rg <AAD_TENANTID_GOES_HERE> <SUBSCRIPTION_GOES_HERE> /subscriptions/<SUBSCRIPTION_GOES_HERE>/resourceGroups/aksbl01-spoke-rg/providers/Microsoft.Network/virtualNetworks/vnet-hub-spoke-BU0001A0008-00 6c04a532-82d6-4d39-aa1a-6d958f488e2e <AAD_TENANTID_GOES_HERE> <E-MAIL_ADDRESS_GOES_HERE> <ADMIN_GOES_HERE>
-```
+Try the following KQL in the Logs Blade, what is it doing?
+AzureDiagnostics
+| where Category == 'kube-audit-admin'
+| extend auditevent=parse_json(log_s)
+| extend objectRef = auditevent.objectRef
+| distinct tostring(objectRef.resource)
+
+**Challenge**
+
+- Instead of using "kubectl logs ..." to search logs, can you do that using AzMon for Containers?
+- Query the **cluster-autoscaler** Control Plane logs. **Hint: They are captured using Azure Diagnostics.**
 
 **NOTE**
-make sure to save the output of the script execution above for the next step on deploying resources.
+
+- Feel free to explore more and try adding your own Flux agent setup to the cluster.
 
 ---
 
 ## Summary
 
-After successful execution of the script you should see 3 resource groups, one for the Hub Network, one for the Spoke Network, and one for the AKS Workload. Feel free to explore them.
+Congratultions! You made it to the end. You now have a complete understanding of all the different aspects of the AKS Baseline Architecture.
 
 ---
 
 ## References
 
-N/A
+- [Azure Monitor for Containers](https://docs.microsoft.com/azure/azure-monitor/insights/container-insights-overview)
+- [AKS Control Plane Logs](https://docs.microsoft.com/azure/aks/view-control-plane-logs)
+- [AKS Baseline Monitoring](https://docs.microsoft.com/azure/architecture/reference-architectures/containers/aks/secure-baseline-aks#monitor-and-collect-metrics)
 
 ---

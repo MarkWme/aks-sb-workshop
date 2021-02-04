@@ -38,10 +38,13 @@ kubectl get k8sazurecontainerallowedimages $(kubectl get k8sazurecontainerallowe
 ```
 
 **Challenge**
-See if you can find the corresponding Azure Policy in the Portal.
+
+- See if you can find the corresponding **k8sazurecontainerallowedimages** Azure Policy in the Portal.
+- See if you can find where it shows the policy violations in the Azure Portal, and in AKS.
 
 **NOTE**
-Feel free to explore some of the other policies (ConstraintTemplates).
+
+- Make sure to explore some of the other policies (ConstraintTemplates).
 
 ---
 
