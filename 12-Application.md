@@ -35,15 +35,18 @@ kubectl run -it --rm centos --image=centos:8 --requests 'cpu=250m,memory=512Mi' 
 # Hmmm, what can we do? Let's load image into Trusted ACR
 az acr list -o table
 ACR=<ACR_GOES_HERE>
-ACR=acrakslxto6j77n4keq
 az acr update --name $ACR --admin-enabled
 az acr login --name $ACR
 az acr update --name $ACR --public-network-enabled true
 az acr login --name $ACR
+
+# What can we do to resolve the constraints?
 docker pull centos:8
 docker tag centos:8 $ACR.azurecr.io/centos:8
 docker push $ACR.azurecr.io/centos:8
 az acr update --name $ACR --public-network-enabled false
+
+# Let's try running the container again
 kubectl run -it --rm centos --image="$ACR.azurecr.io/centos:8" --requests 'cpu=250m,memory=512Mi' --limits 'cpu=250m,memory=512Mi' -- /bin/bash
 
 # Once we are inside of the container, let's try hitting some endpoints to see what we can, and cannot do.
@@ -67,7 +70,7 @@ exit
 
 **Challenge**
 
-- Find out why the Pod in the default namespace could not access Ingress Controller endpoint.
+- Find out why the Pod in the default namespace could not access Ingress Controller endpoint. **Hint: The answer is in the documentation.**
 - Create a deny all Network Policy in the default namespace, and then validate it by trying to curl **http://security.ubuntu.com**
 
 **NOTE**
