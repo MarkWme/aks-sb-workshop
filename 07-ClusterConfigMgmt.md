@@ -56,7 +56,8 @@ kubectl -n cluster-baseline-settings get deploy,ds,po
 
 **Challenge**
 
-- Can you find the log entry that shows where the **mic** deployment got added back?
+- Find the log entry that shows where the **mic** deployment got added back.
+- Turn the Flux Agent off.
 
 **NOTE**
 

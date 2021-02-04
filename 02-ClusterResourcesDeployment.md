@@ -50,8 +50,8 @@ curl -k -H "Host: bicycle.contoso.com" https://<PUBLIC_IP_GOES_HERE>/
 
 **Challenge**
 
-- What AKS supporting resources did the deployment create?
-- What is the name of the resource group that the AKS worker nodes got deployed too?
+- Find the AKS supporting resources that were part of the deployment.
+- Find the name of the resource group that the AKS worker nodes got deployed too.
 
 **NOTE**
 

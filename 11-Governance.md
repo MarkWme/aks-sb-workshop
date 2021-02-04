@@ -37,10 +37,19 @@ kubectl get k8sazurecontainerallowedimages
 kubectl get k8sazurecontainerallowedimages $(kubectl get k8sazurecontainerallowedimages -o jsonpath='{.items[0].metadata.name}') -o yaml | grep -i imageregex
 ```
 
+Now that we see how it works, let's test it out to see what it looks like in action.
+
+```bash
+# Start up a container in the default Namespace
+kubectl run -it --rm centos --image=centos:8 -- /bin/bash
+
+# What kind of policy violations do you see?
+```
+
 **Challenge**
 
-- See if you can find the corresponding **k8sazurecontainerallowedimages** Azure Policy in the Portal.
-- See if you can find where it shows the policy violations in the Azure Portal, and in AKS.
+- Find the corresponding **k8sazurecontainerallowedimages** Azure Policy in the Portal.
+- Find where it shows the policy violations in the Azure Portal, and in AKS.
 
 **NOTE**
 

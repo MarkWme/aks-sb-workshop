@@ -67,12 +67,12 @@ exit
 
 **Challenge**
 
-- Determine why the Pod in the default namespace could not access Ingress Controller endpoint?
-- Create a deny all Network Policy in the default namespace and then validate it by trying to curl a public url.
+- Find out why the Pod in the default namespace could not access Ingress Controller endpoint.
+- Create a deny all Network Policy in the default namespace, and then validate it by trying to curl **http://security.ubuntu.com**
 
 **NOTE**
 
-- Explore more with network policies and what you can and cannot do.
+- Explore network policies some more to see what is, and is not possible.
 
 ---
 

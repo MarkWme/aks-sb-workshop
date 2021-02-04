@@ -48,7 +48,7 @@ AzureDiagnostics
 
 **Challenge**
 
-- Instead of using "kubectl logs ..." to search logs, can you do that using AzMon for Containers?
+- Instead of using "kubectl logs ..." to search logs, find another way.
 - Query the **cluster-autoscaler** Control Plane logs. **Hint: They are captured using Azure Diagnostics.**
 
 **NOTE**
