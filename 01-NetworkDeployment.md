@@ -40,7 +40,7 @@ After we have defined our variables, we are going to execute the **0-networking-
 ```
 
 **NOTE**
-make sure to save the output of the script execution above for the next step on deploying resources.
+Make sure to save the output of the script execution above for the next step on deploying resources.
 
 ---
 

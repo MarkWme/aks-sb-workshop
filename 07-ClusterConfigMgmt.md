@@ -10,48 +10,64 @@ In this part we will explore the concept of GitOps using an open source tool cal
 
 ## Concepts
 
-Instead of spending time creating the network by hand, we are going to use an ARM Template to construct what we need.
+Instead of using an **imperative** approach like kubectl, we are going to explore a tool called **Flux** that automatically synchronizes cluster and repository changes. Kubernetes and AKS do not support that experience natively. To manage the workflow, such as release of a new version and validation of that version before deploying to production, consider a **GitOps** flow. Flux deploys an agent in the cluster to make sure that the state of the cluster is coordinated with configuration stored in a private Git repo.
 
 ---
 
 ## Exercises
 
-The first thing we are going to do is define the variables needed for the script that will execute the ARM networking template.
+Let's explore GitOps.
 
 ```bash
-# Variables
-PREFIX="khaksbl"
-LOC="westeurope"
-SUB="<SUBSCRIPTION_GOES_HERE>"
-AAD_TENANTID="<AAD_TENANTID_GOES_HERE>"
-HUB_NAME_RG="${PREFIX}-hub-rg"
-SPOKE_NAME_RG="${PREFIX}-spoke-rg"
-AKS_RG="${PREFIX}-aks-rg"
+# First, let's check out existing namespaces.
+kubectl get namespaces
 ```
 
-After we have defined our variables, we are going to execute the **0-networking-stamp.sh** script in the **inner-loop-scripts/shell** directory in the AKS Baseline repo.
+**What do you notice?** There are a number of additional namespaces in addition to the default. How did those get there? Automation and **GitOps!**
 
 ```bash
-# Execute Script (inner-loop-scripts/shell)
-./0-networking-stamp.sh -l $LOC -s $SUB -t $AAD_TENANTID -h $HUB_NAME_RG -p $SPOKE_NAME_RG -c $AKS_RG
+# Let's Explore the Flux Agent
+# First Check out cluster-baseline-settings namespace where Flux is deployed
+kubectl -n cluster-baseline-settings get deploy,po,secrets
+kubectl -n cluster-baseline-settings get deploy,po,secrets | grep -i flux
 
-# Sample Output (SAVE for Next Section)
-./1-cluster-stamp.sh westeurope aksbl01-aks-rg aksbl01-spoke-rg <AAD_TENANTID_GOES_HERE> <SUBSCRIPTION_GOES_HERE> /subscriptions/<SUBSCRIPTION_GOES_HERE>/resourceGroups/aksbl01-spoke-rg/providers/Microsoft.Network/virtualNetworks/vnet-hub-spoke-BU0001A0008-00 6c04a532-82d6-4d39-aa1a-6d958f488e2e <AAD_TENANTID_GOES_HERE> <E-MAIL_ADDRESS_GOES_HERE> <ADMIN_GOES_HERE>
+# Let's look at Flux Logs
+kubectl -n cluster-baseline-settings logs -l app.kubernetes.io/name=flux
+# OR if you want to see more output
+kubectl -n cluster-baseline-settings logs -l app.kubernetes.io/name=flux --tail 1000
+```
+
+**What do you see in the logs?** There is a bunch of reconciliation going on. The agent is periodically checking the git repo for changes and comparing that to what is running in the cluster. If there are discrepancies then it's job is to reconcile them.
+
+```bash
+# Reconciliation in Action
+# Which repo is Flux point too? 
+kubectl -n cluster-baseline-settings get deploy flux -o yaml | grep -i git
+
+# Delete AAD Pod Identity
+kubectl -n cluster-baseline-settings get deploy,ds,po
+kubectl -n cluster-baseline-settings get deploy aad-pod-identity-mic
+kubectl -n cluster-baseline-settings delete deploy aad-pod-identity-mic
+# Verify mic Deployment is gone
+kubectl -n cluster-baseline-settings get deploy aad-pod-identity-mic
+# Wait ~5mins (Flux Timeout Setting), what happens?
+kubectl -n cluster-baseline-settings get deploy,ds,po
 ```
 
 **NOTE**
-make sure to save the output of the script execution above for the next step on deploying resources.
+Feel free to explore more, or add your own Flux agent setup to the cluster.
 
 ---
 
 ## Summary
 
-After successful execution of the script you should see 3 resource groups, one for the Hub Network, one for the Spoke Network, and one for the AKS Workload. Feel free to explore them.
+You should now have a better understanding of what GitOps is, the types of challenges it can solve, and what an implementation looks like.
 
 ---
 
 ## References
 
-N/A
+- [GitOps Definition from Weaveworks](https://www.weave.works/technologies/gitops/)
+- [AKS Baseline Cluster CI/CD](https://docs.microsoft.com/azure/architecture/reference-architectures/containers/aks/secure-baseline-aks#cluster-cicd)
 
 ---

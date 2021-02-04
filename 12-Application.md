@@ -2,7 +2,7 @@
 
 ## Examining the AKS Secure Baseline Deployment
 
-In this part we will explore the different ways that AKS interacts with the Application. The goal is to not spend time on the App, it is purposefully boring, but how it works within the AKS Baseline ecosystem.
+In this part we will explore the different ways that AKS can interact with the Application. The goal is to not spend time on the App, it is purposefully boring, but how it works within the AKS Baseline ecosystem.
 
 ---
 
@@ -10,48 +10,37 @@ In this part we will explore the different ways that AKS interacts with the Appl
 
 ## Concepts
 
-Instead of spending time creating the network by hand, we are going to use an ARM Template to construct what we need.
+By default, a pod can accept traffic from any other pod in the cluster. **Kubernetes NetworkPolicy** is used to restrict network traffic between pods. Apply policies judiciously, otherwise you might have a situation where a critical network flow is blocked. Only allow specific communication paths, as needed, such as traffic between the ingress controller and workload.
+
+**NOTE: Enable network policy when the cluster is provisioned because it can't be added later.**
 
 ---
 
 ## Exercises
 
-The first thing we are going to do is define the variables needed for the script that will execute the ARM networking template.
+Let's explore the NetworkPolicies that were created as part of **GitOps**.
 
 ```bash
-# Variables
-PREFIX="khaksbl"
-LOC="westeurope"
-SUB="<SUBSCRIPTION_GOES_HERE>"
-AAD_TENANTID="<AAD_TENANTID_GOES_HERE>"
-HUB_NAME_RG="${PREFIX}-hub-rg"
-SPOKE_NAME_RG="${PREFIX}-spoke-rg"
-AKS_RG="${PREFIX}-aks-rg"
-```
-
-After we have defined our variables, we are going to execute the **0-networking-stamp.sh** script in the **inner-loop-scripts/shell** directory in the AKS Baseline repo.
-
-```bash
-# Execute Script (inner-loop-scripts/shell)
-./0-networking-stamp.sh -l $LOC -s $SUB -t $AAD_TENANTID -h $HUB_NAME_RG -p $SPOKE_NAME_RG -c $AKS_RG
-
-# Sample Output (SAVE for Next Section)
-./1-cluster-stamp.sh westeurope aksbl01-aks-rg aksbl01-spoke-rg <AAD_TENANTID_GOES_HERE> <SUBSCRIPTION_GOES_HERE> /subscriptions/<SUBSCRIPTION_GOES_HERE>/resourceGroups/aksbl01-spoke-rg/providers/Microsoft.Network/virtualNetworks/vnet-hub-spoke-BU0001A0008-00 6c04a532-82d6-4d39-aa1a-6d958f488e2e <AAD_TENANTID_GOES_HERE> <E-MAIL_ADDRESS_GOES_HERE> <ADMIN_GOES_HERE>
+# List NetworkPolicies
+kubectl get networkpolicies,netpol
+kubectl get networkpolicies,netpol -A
 ```
 
 **NOTE**
-make sure to save the output of the script execution above for the next step on deploying resources.
+Try creating your own Network Policy to better understand how it works.
 
 ---
 
 ## Summary
 
-After successful execution of the script you should see 3 resource groups, one for the Hub Network, one for the Spoke Network, and one for the AKS Workload. Feel free to explore them.
+You should now have a better understanding of how Network Policies can be used to help govern network traffic within, as well as in and out of the AKS Cluster.
 
 ---
 
 ## References
 
-N/A
+- [K8s Network Policy](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+- [Network Policy Viewer](https://orca.tufin.io/netpol/#)
+- [AKS Baseline Network Policy](https://docs.microsoft.com/azure/architecture/reference-architectures/containers/aks/secure-baseline-aks#pod-to-pod-traffic)
 
 ---
