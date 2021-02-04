@@ -54,8 +54,14 @@ kubectl -n cluster-baseline-settings get deploy aad-pod-identity-mic
 kubectl -n cluster-baseline-settings get deploy,ds,po
 ```
 
+**Challenge**
+
+- Find the log entry that shows where the **mic** deployment got added back.
+- Turn the Flux Agent off.
+
 **NOTE**
-Feel free to explore more, or add your own Flux agent setup to the cluster.
+
+- Feel free to explore more and try adding your own Flux agent setup to the cluster.
 
 ---
 
