@@ -48,6 +48,7 @@ Identity | Usage
 `<cluster name>-agentpool` | Authenticates with Azure Container Registry
 `mi-<cluster-name>-controlplane` | 
 `omsagent-<cluster name>` | Allows the metrics agent to publish metrics to Azure Monitor
+`mi-appgateway-frontend` | Allows Application Gateway to access secrets in Azure Key Vault
 `podmi-ingress-controller` | Used to allow the Traefik ingress controller to access secrets in Azure Key Vault
 
 ---

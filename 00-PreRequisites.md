@@ -14,3 +14,7 @@ Clone this repo
 Fork the AKS Secure Baseline Repo?
 Clone the AKS Secure Baseline Repo
 
+
+Create AAD tenant
+
+
