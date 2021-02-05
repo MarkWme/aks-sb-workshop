@@ -42,6 +42,8 @@ az network route-table show -g akssb-spoke -n route-to-westeurope-hub-fw --query
 >]
 >```
 
+Inspect the Azure Firewall rules
+
 Inspect the private link configuration (easier in the portal?)
 
 ---
