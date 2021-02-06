@@ -21,12 +21,12 @@ The first step is to execute the output script from section 1.
 ```bash
 # Script output will look something like:
 ./1-cluster-stamp.sh westeurope aksbl02-aks-rg aksbl02-spoke-rg 11111111-1111-1111-1111-111111111111 11111111-1111-1111-1111-111111111111 /subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/aksbl02-spoke-rg/providers/Microsoft.Network/virtualNetworks/vnet-spoke-BU0001A0008-00 11111111-1111-1111-1111-111111111111 11111111-1111-1111-1111-111111111111 contoso@microsoft.com contosoadmin
+# End of Sample Output
 ```
 
-After the script has finished executing, be sure to grab the Public IP of the Application Gateway WAF to test that everything is working.
+After the script has finished executing, be sure to grab the Public IP of the Application Gateway WAF to test that everything is working. When the script is complete, you'll see the following output.
 
 ```bash
-# End of Sample Output
 NEXT STEPS
 ---- -----
 

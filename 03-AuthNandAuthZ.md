@@ -17,7 +17,7 @@ By default, authentication is provided through certificates. Any user presenting
 
 The Kubernetes API server has an OIDC (Open ID Connect) plug-in and Azure AD supports OIDC. Therefore, you can configure your Kubernetes cluster to work with Azure AD, then users and groups can be granted access to the cluster and the lifecycle of those users and groups is managed in Azure AD as usual. 
 
-Access to a Kubernetes cluster's resources is managed through it's own Role Based Access Control (RBAC) process. This is separate from Azure AD's RBAC (although there is a preview feature that helps map Azure AD RBAC roles to Kubernetes RBAC). When you deployed the cluster, you provided the object ID for an Azure AD group that you'd previously created. As part of the process of enabling an AKS cluster for use with Azure AD, the deployment will have created Kubernetes RBAC objects and configured them to allow that Azure AD group to have administrator level access to the cluster. 
+Access to a Kubernetes cluster's resources is managed through it's own Role Based Access Control (RBAC) process. This is separate from Azure AD's RBAC (although there is a preview feature that helps map Azure AD RBAC roles to Kubernetes RBAC). During the deployment process, the baseline created an AKS admin user account and added it to a group in your Azure AD tenant. As part of the process of enabling an AKS cluster for use with Azure AD, the deployment will have created Kubernetes RBAC objects and configured them to allow that Azure AD group to have administrator level access to the cluster. 
 
 You can add more users to that Azure AD group to grant them administrator access to the cluster, or you can create new Azure AD groups and then use Kubernetes RBAC to allow those groups specific access rights to certain resources. Using this method, you could, for example, ensure that developers and cluster operators only have the necessary access level to the Kubernetes resources related to their own applications and not to those belonging to other applications.
 
@@ -79,9 +79,7 @@ This should list all of the pods running in your cluster across all namespaces. 
 >```
 Because your cluster has AAD integration enabled, you now need to authenticate using an AAD account. Go ahead and open [https://microsoft.com/devicelogin](https://microsoft.com/devicelogin) in your browser and enter the code. Remember your code will be different to the one documented here!  You'll then be asked to authenticate with Azure AD.
 
-> Remember to authenticate using the Azure AD account that you added to the AAD group that you created.
-
-![Azure Active Directory sign in prompt](images/03aadsignin.png)
+The AKS administrator account will be named `aksadminuser@<your-new-tenant-domain>.onmicrosoft.com` and the default password will be `ChangeMebu0001a0008AdminChangeMe`. You'll be prompted to reset the password on first login.
 
 Once authentication is complete, return to the terminal where you entered the `kubectl` command and you should see the output.
 
@@ -132,7 +130,7 @@ This will provide the details for this particular binding as follows:
 >  ----   ----                                  ---------
 >  Group  56e5d9db-602e-49cb-a594-e7bd3c00a7f3
 >```
-As you can see, the `ClusterRole` named `cluster-admin` is bound to a `Group` whose `Name` should be the object ID of the AAD group you created. This is effectively saying that we want to grant this "Group" the role of "cluster-admin"
+As you can see, the `ClusterRole` named `cluster-admin` is bound to a `Group` whose `Name` should be the object ID of the AAD group the deployment created. This is effectively saying that we want to grant this "Group" the role of "cluster-admin"
 
 We can also examine cluster-role to see what level of access that grants us
 ```
