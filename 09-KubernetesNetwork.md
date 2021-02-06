@@ -148,6 +148,8 @@ If you read the `Spec` section, it's saying for pods with a label that match `ap
 
 ## Summary
 
+In this section, we've shown how a selection of Azure first party and third party services can be combined to provide secure networking features for your AKS cluster and the applications running within it.
+
 ---
 
 ## References
