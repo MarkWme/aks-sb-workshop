@@ -5,9 +5,9 @@ Whilst the AKS Secure Baseline [repo](https://github.com/mspnp/aks-secure-baseli
 
 ### **Contents**
 
-0. **Pre-requisites**
-1. **Deploying the network infrastructure**
-2. **Deploying and configuring the AKS cluster and supporting services.**
+0. [**Pre-requisites**](00-PreRequisites.md)
+1. [**Deploying the network infrastructure**](01-NetworkDeployment.md)
+2. [**Deploying and configuring the AKS cluster and supporting services.**](02-ClusterResourcesDeployment.md)
 
 3. [**Authentication and Authorisation**](03-AuthNandAuthZ.md)
     - Accessing your cluster using Azure Active Directory for authentication
@@ -21,21 +21,21 @@ Whilst the AKS Secure Baseline [repo](https://github.com/mspnp/aks-secure-baseli
     - Memory reservation
     - Node maintenance, kured, node image updates
 
-5. **Identity Management**
+5. [**Identity Management**](05-IdentityManagement.md)
     - Managed Identity configuration
 
-6. **Container Registry**
+6. [**Container Registry**](06-ContainerRegistry.md)
     - Authentication
     - Importing public images
     - Geo replication
 
-7. **Cluster Configuration Management**
+7. [**Cluster Configuration Management**](07-ClusterConfigMgmt.md)
     - GitOps / Flux
     - Investigate the YAML files
     - Namespaces
     - Components installed via GitOps - Pod Identity, Key Vault CSI
 
-8. **Azure Network Configuration**
+8. [**Azure Network Configuration**](08-AzureNetwork.md)
     - Hub and spoke network topology, peering
     - Subnets for App Gateway, Ingress and Cluster
     - Forced tunnel configuration
@@ -43,23 +43,23 @@ Whilst the AKS Secure Baseline [repo](https://github.com/mspnp/aks-secure-baseli
     - Azure Firewall configuration
     - Azure Load Balancer
 
-9. **Kubernetes Network Configuration**
+9. [**Kubernetes Network Configuration**](09-KubernetesNetwork.md)
     - Azure CNI, network address space design
     - Azure Network Policy
     - App Gateway, Traefik Ingress, Certificates
 
-10. **Secret Management**
+10. [**Secret Management**](10-SecretManagement.md)
     - Key Vault configuration
 
-11. **Governance**
+11. [**Governance**](11-Governance.md)
     - Azure Policy
     - Understand the default policies that have been deployed
 
-12. **Application**
+12. [**Application**](12-Application.md)
     - Deployment
     - Network policy
     - Traffic flow
     - PDB
 
-13. **Monitoring and Observability**
+13. [**Monitoring and Observability**](13-MonitoringandObservability.md)
     - Use Log Analytics to ...
