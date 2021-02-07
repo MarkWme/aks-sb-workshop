@@ -8,7 +8,7 @@ In this section, we cover the use of secrets and how they are managed in the sec
 
 In other sections, we've covered how Azure Key Vault is used to securely store secrets. Whilst Kubernetes has it's own secrets management mechanism built in, using Azure Key Vault offers a more robust solution which can align with secret management policies used within your organisation.
 
-In the secure baseline, Key Vault is configured with private link and uses a private endpoint on the subnet where the AKS cluster nodes are located and disables access from external networks. This limits network access to Key Vault and only allows the cluster nodes access.
+In the secure baseline, Key Vault is configured with private link and uses a private endpoint on the subnet where the AKS cluster nodes are located. This limits network access to Key Vault and only allows the cluster nodes access from an internal network.
 
 Access to secrets in Key Vault is secured using Azure AD identities. In this case, two managed identities are being used to retrieve certificates from Key Vault. One for Azure Application Gateway and one for the Traefik ingress controller.
 
@@ -170,13 +170,13 @@ So, the effect of this is that the secret defined in the `SecretProviderClass` o
 
 Let's take a look at the Traefik pods to see this. We'll use an `exec` command to run a shell inside one of the Traefik pods
 
-```
+```bash
 kubectl exec -n a0008 <name of one of your Traefik pods> -t -i -- /bin/sh
 ```
 
 After a few moments you should see a prompt. Change into the certs directory and list its contents.
 
-```
+```bash
 / $ cd certs
 /certs $ ls -al
 total 12
