@@ -2,7 +2,7 @@
 
 ## Part 5: Identity Management
 
-In this section, we'll examine 
+In this section, we'll examine the use of identities within the secure baseline.
 
 ## Concepts
 
