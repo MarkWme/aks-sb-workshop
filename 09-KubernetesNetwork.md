@@ -14,9 +14,9 @@ Ingress, the traffic coming into our cluster, is being routed through an Azure A
 
 You can choose from a number of products to implement Ingress in Kubernetes. Traefik (simply pronounced "traffic") has been selected for the secure baseline implementation simply to show how third party products can be integrated with Azure services. In this case, we're using Pod Identity to allow Traefik to use a Managed Identity to access Azure Key Vault.
 
-Application Gateway and Traefik both require access to certificates. A TLS certificate is used by Application Gateway to terminate incoming traffic and then a second certificate is used to re-encrypt traffic before it is sent on to the Ingress controller. The certificates are securely stored in Azure Key Vault and private link is used to restrict network access to Key Vault, preventing access from external networks and subnets other than those specifically enabled.
+Application Gateway and Traefik both require access to certificates. A TLS certificate is used by Application Gateway to terminate incoming traffic and then a second certificate is used to re-encrypt traffic before it is sent on to the Ingress controller. The certificates are securely stored in Azure Key Vault and private link is used to restrict network access to Key Vault.
 
-Traefik uses one of those certificates to terminate traffic incoming from Application Gateway. To access the secret in Azure Key Vault, it uses an open source add-on called the Azure Key Vault provider for Secrets Store CSI driver. What this does, is it accesses Key Vault to retrieve a secret, then mounts the secret in the Traefik pod so that it can read it. Access to Key Vault is provided using Azure AD Pod Identity, which gives access to a managed identity, which is then used to access Azure Key Vault and to retrieve the certificate.
+Traefik uses one of those certificates to terminate traffic incoming from Application Gateway. To access the secret in Azure Key Vault, it uses an open source add-on called the Azure Key Vault provider for Secrets Store CSI driver. What this does is it accesses Key Vault to retrieve a secret, then mounts the secret in the Traefik pod so that it can read it. Access to Key Vault is provided using Azure AD Pod Identity, which gives access to a managed identity, which is then used to access Azure Key Vault and to retrieve the certificate.
 
 ---
 
@@ -105,7 +105,7 @@ kubectl describe configmap -n a0008 traefik-ingress-config
 
 There will be a lot of information in that output, but look for a section referencing `http.middlewares` and you should see an entry that specifically mentions the IP address range being used by the subnet that our Application Gateway is deployed to. So, with these entries we're ensuring that Traefik accepts only HTTPS encrypted traffic that is being sent from our Application Gateway.
 
-We've also defined a network policy to ensure that incoming traffic from the Traefik ingress controller can only go to our application pod. You can view this policy like this.
+We've also defined a network policy to ensure that traffic from the Traefik ingress controller can only be forwarded to our application pod. You can view this policy like this.
 
 Get a list of all network policies defined in the cluster
 
@@ -142,7 +142,7 @@ kubectl describe netpol -n a0008 allow-only-ingress-to-workload
 >  Policy Types: Ingress
 >```
 
-If you read the `Spec` section, it's saying for pods with a label that match `app.kubernetes.io/name=aspnetapp` the policy allows ingress traffic to all ports from pods that have the labels `app.kubernetes.io/instance=traefik-ingress-ilb` or `app.kubernetes.io/name=traefik-ingress-ilb`. So, our application pod will only accept traffic from Traefik and nowhere else.
+If you read the `Spec` section, it's saying for pods with a label that match `app.kubernetes.io/name=aspnetapp` the policy allows ingress traffic to all ports *from* pods that have the labels `app.kubernetes.io/instance=traefik-ingress-ilb` or `app.kubernetes.io/name=traefik-ingress-ilb`. So, our application pod will only accept traffic from Traefik and nowhere else.
 
 ---
 
