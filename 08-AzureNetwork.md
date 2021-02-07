@@ -20,43 +20,22 @@ Private Link is enabled on Azure Container Registry and Azure Key Vault. Private
 
 ## Exercises
 
-Inspect the route table
+Using the Azure Portal, find the route table for your spoke network and confirm that it is fowarding all traffic to the Azure Firewall.
 
-```
-az network route-table show -g akssb-spoke -n route-to-westeurope-hub-fw --query routes
-```
+![Screen shot of the Azure Portal showing the route table](images/08-routes.png)
 
->```
->[
->  {
->    "addressPrefix": "0.0.0.0/0",
->    "etag": "W/\"1542bd8e-1fdc-4370-a2f5-a1fae166d864\"",
->    "id": "/subscriptions/808121c2-95b0-4e15-8dbc-cb6de76a956a/resourceGroups/akssb-spoke/providers/Microsoft.Network/routeTables/route-to-westeurope-hub-fw/routes/r-nexthop-to-fw",
->    "name": "r-nexthop-to-fw",
->    "nextHopIpAddress": "10.200.0.4",
->    "nextHopType": "VirtualAppliance",
->    "provisioningState": "Succeeded",
->    "resourceGroup": "akssb-spoke",
->    "type": "Microsoft.Network/routeTables/routes"
->  }
->]
->```
+Using the Azure Portal, find the Azure Firewall rules. Identify the rules that allow the AKS cluster to operate normally, including rules that allow the following:
 
-Inspect the Azure Firewall rules
+- Software package installations and updates
+- Access to Azure Container Registry
+- Access from pods / nodes to the cluster API server
 
-Inspect the private link configuration (easier in the portal?)
+Inspect the private link configuration in the Azure Portal. Find the endpoints that allow the AKS cluster nodes access to the Azure Container Registry and Azure Key Vault.
+
+In Azure Container Registry and Azure Key Vault, confirm that access via public networks is not allowed.
 
 ---
 
 ## Summary
 
----
-
-## References
-
-    - Hub and spoke network topology, peering
-    - Subnets for App Gateway, Ingress and Cluster
-    - Forced tunnel configuration
-    - Network Security Group configuration
-    - Azure Firewall configuration
-    - Azure Load Balancer
+The secure baseline is built on the hub and spoke architecture that is a typical feature of many Azure deployments and provides secure a secure path for egress traffic from an AKS cluster. It also limits and secures communications between AKS and other Azure services.
