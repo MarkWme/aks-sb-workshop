@@ -32,7 +32,7 @@ Using the Azure Portal, find the Azure Firewall rules. Identify the rules that a
 
 Inspect the private link configuration in the Azure Portal. Find the endpoints that allow the AKS cluster nodes access to the Azure Container Registry and Azure Key Vault.
 
-In Azure Container Registry and Azure Key Vault, confirm that access via public networks is not allowed.
+In Azure Container Registry confirm that access via public networks is not allowed.
 
 ---
 
