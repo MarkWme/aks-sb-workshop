@@ -55,6 +55,12 @@ az acr repository list -n <insert ACR name here>
 
 The result will be an error, usually something indicating access is not allowed! Private link is preventing access from outside of the AKS subnet.
 
+---
+
+## Challenges
+
+- Geo-replication is enabled for your Azure Container Registry instance. Can you find where this is configured? Which Azure region is setup as a replica?
+- Temporarily enable public access to your Azure Container Registry instance. Confirm that the command above to view the repositories now works.
 
 ---
 
